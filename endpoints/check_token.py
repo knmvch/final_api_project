@@ -1,8 +1,10 @@
 import requests
-from final_api_project.endpoints.post_authorize import PostAuthorize
+from final_api_project.endpoints.endpoint import Endpoint
 
 
-class GetAuthorize(PostAuthorize):
-    def get_token (self, token):
-        self.response = requests.get(f'{self.url}/{token}')
-        return self.response.status_code
+class CheckToken(Endpoint):
+    def token_is_alive(self):
+        self.response = requests.get(
+            f"{self.url}/authorize/{self.token}"
+        )
+        return self.response.status_code == 200
