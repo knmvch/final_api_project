@@ -9,3 +9,15 @@ class DeleteMeme(Endpoint):
             headers=self.headers()
         )
         return self.response
+
+    def delete_meme_unauthorize(self, meme_id):
+        self.response = requests.delete(
+            f"{self.url}/meme/{meme_id}",
+        )
+        return self.response
+
+    def delete_meme_unauthorized(self, meme_id):
+        self.response = requests.delete(
+            f"{self.url}/meme/{meme_id}"
+        )
+        return self.response

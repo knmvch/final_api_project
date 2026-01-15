@@ -10,6 +10,12 @@ class GetAllMemes(Endpoint):
         )
         return self.response
 
+    def get_all_memes_unauthorize(self):
+        self.response = requests.get(
+            f"{self.url}/meme",
+        )
+        return self.response
+
     def check_created_meme_in_memes_list(self, get_all_memes_endpoint, meme_id):
         meme_ids = [
             meme["id"] for meme in get_all_memes_endpoint.response.json()["data"]

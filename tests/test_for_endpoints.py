@@ -16,9 +16,10 @@ def test_create_new_meme(create_new_meme_endpoint):
     create_new_meme_endpoint.check_field_tags_contains_array()
 
 
-def test_get_all_memes(get_all_memes_endpoint):
-    get_all_memes_endpoint.get_all_memes()
-    get_all_memes_endpoint.check_that_status_is_200()
+def test_get_all_memes(get_all_memes_endpoint, meme_id):
+   get_all_memes_endpoint.get_all_memes()
+   get_all_memes_endpoint.check_that_status_is_200()
+   get_all_memes_endpoint.check_created_meme_in_memes_list(meme_id)
 
 
 def test_get_one_meme(get_one_meme_endpoint, meme_id):
@@ -41,6 +42,7 @@ def test_put_meme(change_meme_endpoint, meme_id):
     change_meme_endpoint.check_field_tags_contains_array()
 
 
-def test_delete_object(delete_meme_endpoint, get_all_memes_endpoint, meme_id):
+def test_delete_object(delete_meme_endpoint, get_all_memes_endpoint, meme_id, get_one_meme_endpoint):
     delete_meme_endpoint.delete_meme(meme_id)
     delete_meme_endpoint.check_that_status_is_200()
+    get_one_meme_endpoint.check_get_meme_after_deleting_not_accessible(get_one_meme_endpoint, meme_id)

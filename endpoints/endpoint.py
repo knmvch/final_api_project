@@ -15,6 +15,9 @@ class Endpoint:
     def check_that_status_is_204(self):
         assert self.response.status_code == 204, "Should return 204"
 
+    def check_that_status_is_401(self):
+        assert self.response.status_code == 401, "Should return 401"
+
     def check_bad_request(self):
         assert self.response.status_code == 400, "Should return 400 for bad request"
 

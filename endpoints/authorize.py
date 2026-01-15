@@ -15,3 +15,6 @@ class PostAuthorize:
         )
         self.token = self.response.json()["token"]
         return self.token
+
+    def check_bad_request(self):
+        assert self.response.status_code == 400, "Should return 400 for bad request"

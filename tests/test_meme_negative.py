@@ -26,7 +26,11 @@ def test_delete_nonexistent_meme(delete_meme_endpoint):
 
 
 def test_create_meme_with_empty_body(create_new_meme_endpoint):
-    create_new_meme_endpoint.create_new_meme(body={})
+    body = {}
+    create_new_meme_endpoint.create_new_meme(body)
+    create_new_meme_endpoint.check_field_contains_string()
+    create_new_meme_endpoint.check_field_tags_contains_array()
+    create_new_meme_endpoint.check_field_info_contains_array()
     create_new_meme_endpoint.check_bad_request()
 
 
@@ -38,4 +42,7 @@ def test_create_meme_invalid_types(create_new_meme_endpoint):
         "info": "just a string",
     }
     create_new_meme_endpoint.create_new_meme(body)
+    create_new_meme_endpoint.check_field_contains_string()
+    create_new_meme_endpoint.check_field_tags_contains_array()
+    create_new_meme_endpoint.check_field_info_contains_array()
     create_new_meme_endpoint.check_bad_request()
