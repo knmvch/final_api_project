@@ -20,6 +20,9 @@ def token():
 
     return token
 
+@pytest.fixture()
+def create_token_endpoint():
+    return PostAuthorize()
 
 @pytest.fixture()
 def create_new_meme_endpoint(token):

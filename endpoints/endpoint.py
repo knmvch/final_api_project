@@ -1,3 +1,6 @@
+import pytest
+
+
 class Endpoint:
     url = "http://memesapi.course.qa-practice.com"
     json = None
@@ -33,9 +36,12 @@ class Endpoint:
             json_data.get("info")
         ), "You must fill all of the fields"
 
-    def check_field_contains_string(self):
+    def check_field_text_contains_string(self):
         json_data = self.response.json()
         assert isinstance(json_data.get("text"), str), 'The "text" field must be of data type string'
+
+    def check_field_url_contains_string(self):
+        json_data = self.response.json()
         assert isinstance(json_data.get("url"), str), 'The "url" field must be of data type string'
 
     def check_field_tags_contains_array(self):
@@ -48,3 +54,7 @@ class Endpoint:
 
     def check_meme_id_in_response_json_is_meme_id(self, meme_id):
         assert self.response.json()["id"] == meme_id
+
+    def check_field_id_contains_int(self):
+        json_data = self.response.json()
+        assert isinstance(json_data.get("id"), int), 'The "id" field must be of data type integer'

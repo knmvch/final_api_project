@@ -107,14 +107,6 @@ def test_deleted_meme_is_not_accessible(
    get_all_memes_endpoint,
    meme_id,
 ):
-   body = {
-       "text": "Delete me",
-       "url": "https://mailtrap.io/wp-content/uploads/2020/06/testing_meme8.jpg",
-       "tags": ["delete"],
-       "info": {"year": 2020},
-   }
-   create_new_meme_endpoint.create_new_meme(body)
-   meme_id = create_new_meme_endpoint.response.json()["id"]
 
    delete_meme_endpoint.delete_meme(meme_id)
    delete_meme_endpoint.check_that_status_is_200()
@@ -124,6 +116,6 @@ def test_deleted_meme_is_not_accessible(
        get_all_memes_endpoint, meme_id
    )
 
-   get_one_meme_endpoint.check_get_meme_afted_deliting_not_accessible(
+   get_one_meme_endpoint.check_get_meme_after_deleting_not_accessible(
        get_one_meme_endpoint, meme_id
    )

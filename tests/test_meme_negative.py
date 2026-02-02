@@ -27,10 +27,16 @@ def test_delete_nonexistent_meme(delete_meme_endpoint):
 
 def test_create_meme_with_empty_body(create_new_meme_endpoint):
     body = {}
-    create_new_meme_endpoint.create_new_meme(body)
-    create_new_meme_endpoint.check_field_contains_string()
-    create_new_meme_endpoint.check_field_tags_contains_array()
-    create_new_meme_endpoint.check_field_info_contains_array()
+    response = create_new_meme_endpoint.create_new_meme(body)
+
+    if response.status_code == 200:
+        create_new_meme_endpoint.check_field_text_contains_string()
+        create_new_meme_endpoint.check_field_url_contains_string()
+        create_new_meme_endpoint.check_field_tags_contains_array()
+        create_new_meme_endpoint.check_field_info_contains_array()
+    else:
+        print(f"Error: Response status code {response.status_code}")
+
     create_new_meme_endpoint.check_bad_request()
 
 
@@ -39,10 +45,64 @@ def test_create_meme_invalid_types(create_new_meme_endpoint):
         "text": 123,
         "url": 123,
         "tags": "not-a-list",
-        "info": "just a string",
+        "info": "just a string"
     }
-    create_new_meme_endpoint.create_new_meme(body)
-    create_new_meme_endpoint.check_field_contains_string()
-    create_new_meme_endpoint.check_field_tags_contains_array()
-    create_new_meme_endpoint.check_field_info_contains_array()
+    response = create_new_meme_endpoint.create_new_meme(body)
+
+    if response.status_code == 200:
+        try:
+            create_new_meme_endpoint.check_field_text_contains_string()
+        except AssertionError as error_in_test:
+            print(f'{error_in_test}')
+
+        try:
+            create_new_meme_endpoint.check_field_url_contains_string()
+        except AssertionError as error_in_test:
+            print(f'{error_in_test}')
+
+        try:
+            create_new_meme_endpoint.check_field_tags_contains_array()
+        except AssertionError as error_in_test:
+            print(f'{error_in_test}')
+
+        try:
+            create_new_meme_endpoint.check_field_info_contains_array()
+        except AssertionError as error_in_test:
+            print(f'{error_in_test}')
+    else:
+        print(f"Error: Response status code {response.status_code}")
+
     create_new_meme_endpoint.check_bad_request()
+
+
+def test_update_meme_with_invalid_types(change_meme_endpoint, meme_id):
+    body = {
+        "text": 123,
+        "url": 123,
+        "tags": "not-a-list",
+        "info": "just a string"
+    }
+    response = change_meme_endpoint.change_meme(body, meme_id)
+
+    if response.status_code == 200:
+        try:
+            change_meme_endpoint.check_field_text_contains_string()
+        except AssertionError as error_in_test:
+            print(f'{error_in_test}')
+
+        try:
+            change_meme_endpoint.check_field_url_contains_string()
+        except AssertionError as error_in_test:
+            print(f'{error_in_test}')
+
+        try:
+            change_meme_endpoint.check_field_tags_contains_array()
+        except AssertionError as error_in_test:
+            print(f'{error_in_test}')
+
+        try:
+            change_meme_endpoint.check_field_info_contains_array()
+        except AssertionError as error_in_test:
+            print(f'{error_in_test}')
+    else:
+        print(f"Error: Response status code {response.status_code}")

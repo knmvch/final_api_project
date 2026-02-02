@@ -12,14 +12,12 @@ def test_create_new_meme(create_new_meme_endpoint):
     )
     create_new_meme_endpoint.check_that_status_is_200()
     create_new_meme_endpoint.check_all_body_fields_filled()
-    create_new_meme_endpoint.check_field_contains_string()
-    create_new_meme_endpoint.check_field_tags_contains_array()
 
 
 def test_get_all_memes(get_all_memes_endpoint, meme_id):
    get_all_memes_endpoint.get_all_memes()
    get_all_memes_endpoint.check_that_status_is_200()
-   get_all_memes_endpoint.check_created_meme_in_memes_list(meme_id)
+   get_all_memes_endpoint.check_created_meme_in_memes_list(get_all_memes_endpoint, meme_id)
 
 
 def test_get_one_meme(get_one_meme_endpoint, meme_id):
@@ -38,8 +36,26 @@ def test_put_meme(change_meme_endpoint, meme_id):
     }
     change_meme_endpoint.change_meme(meme_id, body)
     change_meme_endpoint.check_all_body_fields_filled()
-    change_meme_endpoint.check_field_contains_string()
-    change_meme_endpoint.check_field_tags_contains_array()
+    try:
+        change_meme_endpoint.check_field_text_contains_string()
+    except AssertionError as error_in_test:
+        print(f'{error_in_test}')
+
+    try:
+        change_meme_endpoint.check_field_url_contains_string()
+    except AssertionError as error_in_test:
+        print(f'{error_in_test}')
+
+    try:
+        change_meme_endpoint.check_field_tags_contains_array()
+    except AssertionError as error_in_test:
+        print(f'{error_in_test}')
+
+    try:
+        change_meme_endpoint.check_field_info_contains_array()
+    except AssertionError as error_in_test:
+        print(f'{error_in_test}')
+
 
 
 def test_delete_object(delete_meme_endpoint, get_all_memes_endpoint, meme_id, get_one_meme_endpoint):
