@@ -27,7 +27,7 @@ def test_delete_meme_without_authorization(delete_meme_endpoint, meme_id):
     delete_meme_endpoint.check_that_status_is_401()
 
 def test_get_all_meme_without_authorization(get_all_memes_endpoint):
-    get_all_memes_endpoint.get_all_memes_unauthorize()
+    get_all_memes_endpoint.get_all_memes()
     get_all_memes_endpoint.check_that_status_is_401()
 
 def test_get_one_meme_without_authorization(get_one_meme_endpoint, meme_id):

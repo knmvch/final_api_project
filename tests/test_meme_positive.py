@@ -13,12 +13,10 @@ def test_meme_full_lifecycle(
     }
     create_new_meme_endpoint.create_new_meme(body)
     create_new_meme_endpoint.check_that_status_is_200()
-    create_new_meme_endpoint.check_text_is_text_in_response(create_new_meme_endpoint, body)
-    create_new_meme_endpoint.check_url_is_url_in_response(create_new_meme_endpoint, body)
-    create_new_meme_endpoint.check_tags_is_tags_in_response(create_new_meme_endpoint, body)
-    create_new_meme_endpoint.check_info_is_info_in_response(create_new_meme_endpoint, body)
-
-    meme_id = create_new_meme_endpoint.response.json()["id"]
+    create_new_meme_endpoint.check_text_is_text_in_response(body)
+    create_new_meme_endpoint.check_url_is_url_in_response(body)
+    create_new_meme_endpoint.check_tags_is_tags_in_response(body)
+    create_new_meme_endpoint.check_info_is_info_in_response(body)
 
     get_one_meme_endpoint.get_one_meme(meme_id)
     get_one_meme_endpoint.check_that_status_is_200()
@@ -30,7 +28,7 @@ def test_meme_full_lifecycle(
         "tags": body["tags"],
         "info": body["info"],
     }
-    change_meme_endpoint.change_meme(updated_body, meme_id)
+    change_meme_endpoint.change_meme(meme_id, updated_body)
 
     get_one_meme_endpoint.get_one_meme(meme_id)
     get_one_meme_endpoint.check_that_status_is_200()
@@ -41,7 +39,6 @@ def test_meme_full_lifecycle(
     change_meme_endpoint.check_updated_url_is_url_in_response(get_one_meme_endpoint, meme_id, update_meme["url"])
     change_meme_endpoint.check_updated_tags_is_tags_in_response(get_one_meme_endpoint, meme_id, update_meme["tags"])
     change_meme_endpoint.check_updated_info_is_info_in_response(get_one_meme_endpoint, meme_id, update_meme["info"])
-
 
     delete_meme_endpoint.delete_meme(meme_id)
     delete_meme_endpoint.check_that_status_is_200()

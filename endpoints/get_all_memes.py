@@ -3,16 +3,11 @@ from final_api_project.endpoints.endpoint import Endpoint
 
 
 class GetAllMemes(Endpoint):
-    def get_all_memes(self):
+    def get_all_memes(self, unauthorized=False):
+        headers = '' if unauthorized else self.headers()
         self.response = requests.get(
             f"{self.url}/meme",
-            headers=self.headers()
-        )
-        return self.response
-
-    def get_all_memes_unauthorize(self):
-        self.response = requests.get(
-            f"{self.url}/meme",
+            headers=headers
         )
         return self.response
 

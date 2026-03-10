@@ -13,8 +13,6 @@ class PostAuthorize:
             f"{self.url}/authorize",
             json={"name": name}
         )
-
-        # Пытаемся извлечь токен только если ответ - JSON
         if 'application/json' in self.response.headers.get('Content-Type', ''):
             try:
                 self.token = self.response.json().get("token")
@@ -38,3 +36,18 @@ class PostAuthorize:
 
     def check_bad_request(self):
         assert self.response.status_code == 400, "Should return 400 for bad request"
+
+    def check_token_exists(self):
+        assert "token" in self.response.json()
+
+    def check_token_is_string(self):
+        assert isinstance(self.response.json()["token"], str)
+
+    def check_token_is_not_empty(self):
+        assert len(self.response.json()["token"]) > 0
+
+    def check_token_not_created(self):
+        assert self.response is None
+
+    def check_that_status_is_400(self):
+        assert self.response.status_code == 400, "Should return 400"

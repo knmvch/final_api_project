@@ -8,3 +8,6 @@ class CheckToken(Endpoint):
             f"{self.url}/authorize/{self.token}"
         )
         return self.response.status_code == 200
+
+    def check_token_is_alive(self):
+        assert self.response.status_code == 200

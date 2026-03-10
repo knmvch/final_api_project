@@ -63,3 +63,15 @@ class GetOneMeme(Endpoint):
         self, get_one_meme_endpoint, body
     ):
         assert get_one_meme_endpoint.response.json()["info"] == body["info"], 'Info in response is not info in request'
+
+    def check_meme_text(self, expected):
+        assert self.response.json()["text"] == expected
+
+    def check_meme_url(self, expected):
+        assert self.response.json()["url"] == expected
+
+    def check_meme_tags(self, expected):
+        assert self.response.json()["tags"] == expected
+
+    def check_meme_info(self, expected):
+        assert self.response.json()["info"] == expected

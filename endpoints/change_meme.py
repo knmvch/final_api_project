@@ -41,3 +41,15 @@ class ChangeMeme(Endpoint):
     ):
         get_one_meme_endpoint.get_one_meme(meme_id)
         assert get_one_meme_endpoint.response.json()["info"] == updated_info
+
+    def check_meme_text(self, expected):
+        assert self.response.json()["text"] == expected
+
+    def check_meme_url(self, expected):
+        assert self.response.json()["url"] == expected
+
+    def check_meme_tags(self, expected):
+        assert self.response.json()["tags"] == expected
+
+    def check_meme_info(self, expected):
+        assert self.response.json()["info"] == expected
